@@ -12,11 +12,13 @@ import SignUpScreen from "./Screens/SignUp";
 import HomeScreen from "./Screens/Home";
 
 import { getAsyncData } from "./hooks/getAsyncData";
+import { fetchUser } from "./hooks/getUserProfile";
 
 import AsyncStorage from "@react-native-community/async-storage";
 import { enableScreens } from "react-native-screens";
 
 import { AuthContext } from "./Context/AuthContext";
+import { UserContext } from "./Context/UserContext";
 
 enableScreens();
 
@@ -28,6 +30,10 @@ export default function App() {
     loggedIn: false,
     token: null,
     id: null,
+  });
+  const [userData, setUserData] = useState({
+    user: {},
+    fetched: false,
   });
 
   useEffect(() => {
@@ -41,6 +47,16 @@ export default function App() {
     });
     setLoading(false);
   }, [loading]);
+
+  useEffect(() => {
+    if (state.loggedIn && !userData.fetched) {
+      fetchUser(state.id)
+        .then((user) => {
+          setUserData({ user: user, fetched: true });
+        })
+        .catch((err) => console.log(err));
+    }
+  });
 
   if (loading) {
     return <SplashScreen />;
@@ -64,61 +80,55 @@ export default function App() {
 
   return (
     <AuthContext.Provider value={state}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {state.id !== null ? (
-            <>
-              {/* <Stack.Screen
-                name="SplashScreen"
-                component={SplashScreen}
-                options={{
-                  headerShown: false,
-                }}
-              /> */}
-
-              <Stack.Screen
-                name="Home"
-                // component={HomeScreen}
-                options={{ headerShown: true }}
-              >
-                {(props) => (
-                  <HomeScreen
-                    {...props}
-                    setContainerState={setContainerState}
-                  />
-                )}
-              </Stack.Screen>
-            </>
-          ) : (
-            <>
-              <Stack.Screen
-                name="Login"
-                // component={HomeScreen}
-                options={{ headerShown: false }}
-              >
-                {(props) => (
-                  <LoginScreen
-                    {...props}
-                    setContainerState={setContainerState}
-                  />
-                )}
-              </Stack.Screen>
-              <Stack.Screen
-                name="SignUp"
-                // component={HomeScreen}
-                options={{ headerShown: false }}
-              >
-                {(props) => (
-                  <SignUpScreen
-                    {...props}
-                    setContainerState={setContainerState}
-                  />
-                )}
-              </Stack.Screen>
-            </>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
+      <UserContext.Provider value={userData}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            {state.id !== null ? (
+              <>
+                <Stack.Screen
+                  name="Home"
+                  // component={HomeScreen}
+                  options={{ headerShown: true }}
+                >
+                  {(props) => (
+                    <HomeScreen
+                      {...props}
+                      setContainerState={setContainerState}
+                    />
+                  )}
+                </Stack.Screen>
+              </>
+            ) : (
+              <>
+                <Stack.Screen
+                  name="Login"
+                  // component={HomeScreen}
+                  options={{ headerShown: false }}
+                >
+                  {(props) => (
+                    <LoginScreen
+                      {...props}
+                      setContainerState={setContainerState}
+                    />
+                  )}
+                </Stack.Screen>
+                <Stack.Screen
+                  name="SignUp"
+                  // component={HomeScreen}
+                  options={{ headerShown: false }}
+                >
+                  {(props) => (
+                    <SignUpScreen
+                      {...props}
+                      setContainerState={setContainerState}
+                    />
+                  )}
+                </Stack.Screen>
+              </>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserContext.Provider>
     </AuthContext.Provider>
   );
 }

@@ -1,15 +1,36 @@
 import * as React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
-import { getAsyncData } from "../hooks/getAsyncData";
+
 import AsyncStorage from "@react-native-community/async-storage";
 
-import { AuthContext } from "../Context/AuthContext";
+import { UserContext } from "../Context/UserContext";
+
+import { getPipelines } from "../hooks/getPipelines";
+
+import PipelineScroller from "../Components/PipelineScroller";
+
+import {
+  useFonts,
+  SairaStencilOne_400Regular,
+} from "@expo-google-fonts/saira-stencil-one";
 
 const Home = (props) => {
+  const [pipelines, setPipelines] = React.useState([]);
+
+  let [fontsLoaded] = useFonts({
+    SairaStencilOne_400Regular,
+  });
+
+  let userContextData = React.useContext(UserContext);
+
   React.useEffect(() => {
-    getAsyncData().then((asyncObject) => {
-      console.log(asyncObject);
-    });
+    if (!userContextData.pipeline && pipelines.length === 0) {
+      getPipelines()
+        .then((pipelines) => {
+          setPipelines(pipelines);
+        })
+        .catch((err) => console.log(err));
+    }
   });
 
   const handleLogout = () => {
@@ -21,12 +42,18 @@ const Home = (props) => {
     });
   };
 
-  let contextData = React.useContext(AuthContext);
-
   return (
     <View style={styles.container}>
-      <Text>Logged in</Text>
-      <Button title="Logout" onPress={handleLogout} />
+      {!userContextData.pipeline ? (
+        <>
+          <PipelineScroller
+            SairaStencilOne_400Regular={SairaStencilOne_400Regular}
+            {...pipelines}
+          />
+        </>
+      ) : (
+        <Text>loaded</Text>
+      )}
     </View>
   );
 };
@@ -37,6 +64,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    minHeight: "100%",
+    minWidth: "100%",
   },
 });
 

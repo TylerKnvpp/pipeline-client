@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   container: {
     minHeight: "100%",
     minWidth: "100%",
-    paddingVertical: 30,
+    paddingVertical: 20,
   },
   cardScroll: {
     flexDirection: "row",

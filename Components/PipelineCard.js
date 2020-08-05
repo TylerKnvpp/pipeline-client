@@ -3,24 +3,18 @@ import { Button, View, Text, Image, StyleSheet, Modal } from "react-native";
 import { SairaStencilOne_400Regular } from "@expo-google-fonts/saira-stencil-one";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import PipelineModal from "./PipelineModal";
-
 const PipelineCard = ({ pipeline, toggleModal, cardSelector, index }) => {
-  //   const [showModal, toggleModal] = React.useState(false);
-
-  //   if (showModal) {
-  //     return <PipelineModal pipeline={pipeline} toggleModal={toggleModal} />;
-  //   }
-
   return (
     <View style={styles.cardContainer}>
       <Image
-        source={{ uri: pipeline.branchInsignia }}
-        style={styles.unitLogo}
-      />
-      <Image
+        resizeMode={"cover"}
         source={{ uri: pipeline.pipelineCoverPhoto }}
         style={styles.cardPhoto}
+      />
+      <Image
+        source={{ uri: pipeline.unitInsignia }}
+        style={styles.unitLogo}
+        resizeMode={"contain"}
       />
       <Text style={styles.nickname}>{pipeline.nickname}</Text>
       <Text style={styles.description}>
@@ -50,25 +44,23 @@ const styles = StyleSheet.create({
     marginRight: 40,
     marginVertical: 20,
     paddingBottom: 20,
-    position: "relative",
+    // position: "relative",
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 10 },
     shadowOpacity: 0.2,
-    height: "80%",
-    width: 290,
+    height: "90%",
+    width: 300,
+    zIndex: 1,
   },
   unitLogo: {
-    position: "absolute",
-    height: 100,
-    width: "auto",
-    top: -15,
-    right: -10,
-    zIndex: 1,
+    marginTop: 20,
+    height: 50,
   },
   cardPhoto: {
     borderRadius: 7,
     width: "100%",
     height: 200,
+    zIndex: 2,
   },
   nickname: {
     fontFamily: "SairaStencilOne_400Regular",

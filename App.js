@@ -5,6 +5,7 @@ import "react-native-gesture-handler";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import SplashScreen from "./Screens/SplashScreen";
 import LoginScreen from "./Screens/Login";
@@ -14,15 +15,17 @@ import HomeScreen from "./Screens/Home";
 import { getAsyncData } from "./hooks/getAsyncData";
 import { fetchUser } from "./hooks/getUserProfile";
 
-import AsyncStorage from "@react-native-community/async-storage";
 import { enableScreens } from "react-native-screens";
 
 import { AuthContext } from "./Context/AuthContext";
 import { UserContext } from "./Context/UserContext";
 
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 enableScreens();
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -82,51 +85,86 @@ export default function App() {
     <AuthContext.Provider value={state}>
       <UserContext.Provider value={userData}>
         <NavigationContainer>
-          <Stack.Navigator>
-            {state.id !== null ? (
-              <>
-                <Stack.Screen
-                  name="Home"
-                  // component={HomeScreen}
-                  options={{ headerShown: true }}
-                >
-                  {(props) => (
-                    <HomeScreen
-                      {...props}
-                      setContainerState={setContainerState}
+          {state.id !== null ? (
+            <Tab.Navigator
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                  let iconName;
+
+                  if (route.name === "Home") {
+                    iconName = focused ? "ios-home" : "ios-home";
+                  } else if (route.name === "Profile") {
+                    iconName = focused ? "ios-person" : "ios-person";
+                  } else if (route.name === "Log Workout") {
+                    iconName = "ios-add";
+                  }
+
+                  // You can return any component that you like here!
+                  return (
+                    <Ionicons
+                      name={iconName}
+                      size={route.name === "Log Workout" ? 32 : 24}
+                      color={focused ? "#007AFF" : "#c7c7cc"}
                     />
-                  )}
-                </Stack.Screen>
-              </>
-            ) : (
-              <>
-                <Stack.Screen
-                  name="Login"
-                  // component={HomeScreen}
-                  options={{ headerShown: false }}
-                >
-                  {(props) => (
-                    <LoginScreen
-                      {...props}
-                      setContainerState={setContainerState}
-                    />
-                  )}
-                </Stack.Screen>
-                <Stack.Screen
-                  name="SignUp"
-                  // component={HomeScreen}
-                  options={{ headerShown: false }}
-                >
-                  {(props) => (
-                    <SignUpScreen
-                      {...props}
-                      setContainerState={setContainerState}
-                    />
-                  )}
-                </Stack.Screen>
-              </>
-            )}
-          </Stack.Navigator>
+                  );
+                },
+              })}
+            >
+              <Tab.Screen name="Home">
+                {(props) => (
+                  <HomeScreen
+                    {...props}
+                    setContainerState={setContainerState}
+                  />
+                )}
+              </Tab.Screen>
+
+              <Tab.Screen name="Log Workout">
+                {(props) => (
+                  <HomeScreen
+                    {...props}
+                    setContainerState={setContainerState}
+                  />
+                )}
+              </Tab.Screen>
+
+              <Tab.Screen name="Profile">
+                {(props) => (
+                  <HomeScreen
+                    {...props}
+                    setContainerState={setContainerState}
+                  />
+                )}
+              </Tab.Screen>
+            </Tab.Navigator>
+          ) : (
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Login"
+                // component={HomeScreen}
+                options={{ headerShown: false }}
+              >
+                {(props) => (
+                  <LoginScreen
+                    {...props}
+                    setContainerState={setContainerState}
+                  />
+                )}
+              </Stack.Screen>
+              <Stack.Screen
+                name="SignUp"
+                // component={HomeScreen}
+                options={{ headerShown: false }}
+              >
+                {(props) => (
+                  <SignUpScreen
+                    {...props}
+                    setContainerState={setContainerState}
+                  />
+                )}
+              </Stack.Screen>
+            </Stack.Navigator>
+          )}
         </NavigationContainer>
       </UserContext.Provider>
     </AuthContext.Provider>

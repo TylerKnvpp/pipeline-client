@@ -5,30 +5,28 @@ const PSTDetails = ({ workout }) => {
   let minScore;
   let optScore;
 
-  let minString = workout.minumumScore.toString();
-  let optString = workout.optimumScore.toString();
+  let minString;
+  let optString;
 
-  if (workout.minumumScore) {
-    if (minString.includes(".")) {
-      minScore = minString.split(".").join(":");
-    } else {
-      minScore = workout.minumumScore;
-    }
+  if (workout.minumumScore.$numberDecimal) {
+    minString = workout.minumumScore.$numberDecimal.toString();
+    optString = workout.optimumScore.$numberDecimal.toString();
 
-    if (optString.includes(".")) {
-      optScore = optString.split(".").join(":");
-    } else {
-      optScore = workout.optimumScore;
-    }
+    minScore = minString.split(".").join(":");
+
+    optScore = optString.split(".").join(":");
   }
 
   return (
     <View style={styles.cardContainer}>
-      <Image
-        resizeMode={"contain"}
-        source={{ uri: workout.icon }}
-        style={styles.icon}
-      />
+      {workout.icon ? (
+        <Image
+          resizeMode={"contain"}
+          source={{ uri: workout.icon }}
+          style={styles.icon}
+        />
+      ) : null}
+
       <Text style={styles.workoutTitle}>{workout.title}</Text>
       <Text style={styles.workoutDescription}>{workout.description}</Text>
 
@@ -36,14 +34,18 @@ const PSTDetails = ({ workout }) => {
         <View style={styles.minScoreContainer}>
           <Text style={styles.minScoreLabel}>Minimum Score</Text>
           <Text style={styles.scoreMinimum}>
-            {minString.includes(".") ? `${minScore}0` : workout.minumumScore}
+            {workout.minumumScore.$numberDecimal
+              ? minScore
+              : workout.minumumScore}
           </Text>
         </View>
 
         <View style={styles.optScoreContainer}>
           <Text style={styles.optScoreLabel}>Optimum Score</Text>
           <Text style={styles.scoreOptimum}>
-            {optString.includes(".") ? `${optScore}0` : workout.optimumScore}
+            {workout.optimumScore.$numberDecimal
+              ? optScore
+              : workout.optimumScore}
           </Text>
         </View>
       </View>

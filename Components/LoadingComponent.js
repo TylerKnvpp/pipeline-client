@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { StyleSheet, View, Animated, Image, Easing } from "react-native";
 ////import all the components we needed
 
-export default function SplashScreen({ navigation }) {
+export default function LoadingComponent() {
   useEffect(() => {
     StartImageRotateFunction();
   });

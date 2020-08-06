@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import PipelineCard from "./PipelineCard";
 import PipelineModal from "./PipelineModal";
+import LoadingComponent from "./LoadingComponent";
 
 const PipelineScroller = ({ SairaStencilOne_400Regular, pipelines }) => {
   const [showModal, toggleModal] = React.useState(false);
@@ -45,7 +46,7 @@ const PipelineScroller = ({ SairaStencilOne_400Regular, pipelines }) => {
     );
   }
 
-  return <Text>weird</Text>;
+  return <LoadingComponent />;
 };
 
 const styles = StyleSheet.create({

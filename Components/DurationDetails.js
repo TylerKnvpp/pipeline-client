@@ -24,9 +24,9 @@ const DurationDetails = ({ phase }) => {
           <Text style={styles.phaseFocus}>
             {phase.phaseFocus} - {phase.phaseDuration} weeks
           </Text>
-          {phase.phaseDescription.map((description) => {
+          {phase.phaseDescription.map((description, index) => {
             return (
-              <Text key={description._id} style={styles.phaseDescription}>
+              <Text key={index} style={styles.phaseDescription}>
                 {description}
               </Text>
             );

@@ -7,10 +7,9 @@ import {
 } from "react-native-gesture-handler";
 
 import DurationDetails from "./DurationDetails";
+import PSTCard from "./PSTCard";
 
 const PipelineModal = ({ toggleModal, pipeline }) => {
-  console.log(pipeline);
-
   const skillsRequired = pipeline.skillsRequired.join(" | ");
 
   return (
@@ -48,6 +47,7 @@ const PipelineModal = ({ toggleModal, pipeline }) => {
               />
             </View>
             <Text style={styles.nickname}>{pipeline.nickname}</Text>
+            <Text style={styles.name}>{pipeline.name}</Text>
             <Text style={styles.duration}>
               DURATION: {pipeline.duration} WEEKS
             </Text>
@@ -62,13 +62,31 @@ const PipelineModal = ({ toggleModal, pipeline }) => {
               return <DurationDetails phase={phase} key={phase._id} />;
             })}
 
+            <Text style={styles.pstHeader}>Physical Screening Test</Text>
+
+            {pipeline.workouts.map((workout) => {
+              return <PSTCard workout={workout} key={workout._id} />;
+            })}
+
+            <Text style={styles.challengeHeader}>
+              DO YOU HAVE WHAT IT TAKES?
+            </Text>
+
+            <Text style={styles.challengeDescription}>
+              Select this pipeline to compare your scores against.
+            </Text>
+
             <TouchableOpacity
               style={styles.viewButton}
               onPress={() => toggleModal(true)}
             >
               <Text style={styles.viewButtonText}>Select Pipeline</Text>
             </TouchableOpacity>
-            <Button title="Close" onPress={() => toggleModal(false)} />
+            <Button
+              style={styles.closeButton}
+              title="Close"
+              onPress={() => toggleModal(false)}
+            />
           </ScrollView>
         </TouchableWithoutFeedback>
       </View>
@@ -77,6 +95,14 @@ const PipelineModal = ({ toggleModal, pipeline }) => {
 };
 
 const styles = StyleSheet.create({
+  challengeDescription: {
+    fontSize: 20,
+    fontWeight: "700",
+    marginLeft: "auto",
+    marginRight: "auto",
+    textAlign: "center",
+    width: "75%",
+  },
   modal: {
     display: "flex",
     alignItems: "center",
@@ -124,6 +150,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
+  challengeHeader: {
+    fontFamily: "SairaStencilOne_400Regular",
+    color: "#000",
+    fontSize: 36,
+    textAlign: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: 20,
+    marginBottom: 20,
+    width: "80%",
+  },
+  pstHeader: {
+    fontFamily: "SairaStencilOne_400Regular",
+    color: "#000",
+    fontSize: 30,
+    textAlign: "center",
+    marginTop: 20,
+    marginBottom: 0,
+  },
   skills: {
     color: "#444444",
     fontWeight: "700",
@@ -159,6 +204,16 @@ const styles = StyleSheet.create({
     fontSize: 36,
     textAlign: "center",
     paddingTop: 5,
+  },
+  name: {
+    color: "#444444",
+    fontSize: 18,
+    fontWeight: "900",
+    textAlign: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: 20,
+    width: "85%",
   },
   description: {
     lineHeight: 30,

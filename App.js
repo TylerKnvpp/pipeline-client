@@ -20,12 +20,18 @@ import { enableScreens } from "react-native-screens";
 import { AuthContext } from "./Context/AuthContext";
 import { UserContext } from "./Context/UserContext";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import MainTabNavigator from "./Navigation/MainTabNavigator";
 
 enableScreens();
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+import {
+  useFonts,
+  SairaStencilOne_400Regular,
+} from "@expo-google-fonts/saira-stencil-one";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -33,142 +39,123 @@ export default function App() {
     loggedIn: false,
     token: null,
     id: null,
+    user: null,
   });
   const [userData, setUserData] = useState({
-    user: {},
+    user: null,
     fetched: false,
   });
 
-  useEffect(() => {
-    getAsyncData().then((asyncObject) => {
-      if (asyncObject.uid !== null || asyncObject.token !== null)
-        setState({
-          loggedIn: true,
-          id: asyncObject.uid,
-          token: asyncObject.token,
-        });
-    });
-    setLoading(false);
-  }, [loading]);
+  const loggedInRef = React.useRef(false);
 
-  useEffect(() => {
-    if (state.loggedIn && !userData.fetched) {
-      fetchUser(state.id)
-        .then((user) => {
-          setUserData({ user: user, fetched: true });
-        })
-        .catch((err) => console.log(err));
-    }
+  let [fontsLoaded] = useFonts({
+    SairaStencilOne_400Regular,
   });
 
-  if (loading) {
-    return <SplashScreen />;
-  }
+  useEffect(() => {
+    let uid;
+    let token;
+    getAsyncData()
+      .then((asyncObject) => {
+        if (asyncObject.uid !== null || asyncObject.token !== null) {
+          uid = asyncObject.uid;
+          token = asyncObject.token;
+        }
+      })
+      .then(() => {
+        fetchUser(uid).then((userObj) => {
+          setState({
+            loggedIn: true,
+            id: uid,
+            token: token,
+            user: userObj.user,
+          });
+          if (userObj.success) {
+            loggedInRef.current = true;
+            setLoading(false);
+          }
+        });
+      });
+  }, []);
 
   const setContainerState = (input) => {
     setState(input);
   };
 
-  const config = {
-    animation: "spring",
-    config: {
-      stiffness: 1000,
-      damping: 500,
-      mass: 3,
-      overshootClamping: true,
-      restDisplacementThreshold: 0.01,
-      restSpeedThreshold: 0.01,
-    },
+  const setUserStateData = (input) => {
+    setUserData(input);
   };
 
-  return (
-    <AuthContext.Provider value={state}>
-      <UserContext.Provider value={userData}>
+  const logoutRef = () => {
+    loggedInRef.current = false;
+  };
+
+  // if (loading) {
+  //   return <SplashScreen />;
+  // }
+
+  if (state.id == undefined) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Login"
+            // component={HomeScreen}
+            options={{ headerShown: false }}
+          >
+            {(props) => (
+              <LoginScreen
+                {...props}
+                setLoading={setLoading}
+                setContainerState={setContainerState}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="SignUp"
+            // component={HomeScreen}
+            options={{ headerShown: false }}
+          >
+            {(props) => (
+              <SignUpScreen
+                {...props}
+                setLoading={setLoading}
+                setContainerState={setContainerState}
+              />
+            )}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+
+  if (loggedInRef) {
+    return (
+      <AuthContext.Provider
+        value={{
+          state: state,
+          setState: (newData) =>
+            setState({
+              user: newData,
+            }),
+        }}
+      >
+        {/* <UserContext.Provider value={userData.user}> */}
+
         <NavigationContainer>
-          {state.id !== null ? (
-            <Tab.Navigator
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
-                  let iconName;
-
-                  if (route.name === "Home") {
-                    iconName = focused ? "ios-home" : "ios-home";
-                  } else if (route.name === "Profile") {
-                    iconName = focused ? "ios-person" : "ios-person";
-                  } else if (route.name === "Log Workout") {
-                    iconName = "ios-add";
-                  }
-
-                  // You can return any component that you like here!
-                  return (
-                    <Ionicons
-                      name={iconName}
-                      size={route.name === "Log Workout" ? 32 : 24}
-                      color={focused ? "#007AFF" : "#c7c7cc"}
-                    />
-                  );
-                },
-              })}
-            >
-              <Tab.Screen name="Home">
-                {(props) => (
-                  <HomeScreen
-                    {...props}
-                    setContainerState={setContainerState}
-                  />
-                )}
-              </Tab.Screen>
-
-              <Tab.Screen name="Log Workout">
-                {(props) => (
-                  <HomeScreen
-                    {...props}
-                    setContainerState={setContainerState}
-                  />
-                )}
-              </Tab.Screen>
-
-              <Tab.Screen name="Profile">
-                {(props) => (
-                  <HomeScreen
-                    {...props}
-                    setContainerState={setContainerState}
-                  />
-                )}
-              </Tab.Screen>
-            </Tab.Navigator>
-          ) : (
-            <Stack.Navigator>
-              <Stack.Screen
-                name="Login"
-                // component={HomeScreen}
-                options={{ headerShown: false }}
-              >
-                {(props) => (
-                  <LoginScreen
-                    {...props}
-                    setContainerState={setContainerState}
-                  />
-                )}
-              </Stack.Screen>
-              <Stack.Screen
-                name="SignUp"
-                // component={HomeScreen}
-                options={{ headerShown: false }}
-              >
-                {(props) => (
-                  <SignUpScreen
-                    {...props}
-                    setContainerState={setContainerState}
-                  />
-                )}
-              </Stack.Screen>
-            </Stack.Navigator>
-          )}
+          <MainTabNavigator
+            logoutRef={logoutRef}
+            SairaStencilOne_400Regular={SairaStencilOne_400Regular}
+            setContainerState={setContainerState}
+            setUserStateData={setUserStateData}
+          />
         </NavigationContainer>
-      </UserContext.Provider>
-    </AuthContext.Provider>
-  );
+        {/* </UserContext.Provider> */}
+      </AuthContext.Provider>
+    );
+  }
+
+  return <SplashScreen />;
 }
 
 const styles = StyleSheet.create({

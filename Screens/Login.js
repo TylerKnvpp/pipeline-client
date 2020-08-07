@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 import LoginForm from "../Components/LoginForm";
 import {
   SafeAreaView,
@@ -11,16 +11,15 @@ import {
   SairaStencilOne_400Regular,
 } from "@expo-google-fonts/saira-stencil-one";
 
-import { AuthContext } from "../Context/AuthContext";
+function Login({
+  navigation,
+  setContainerState,
 
-import AsyncStorage from "@react-native-community/async-storage";
-
-function Login({ navigation, setContainerState }) {
+  setLoading,
+}) {
   let [fontsLoaded] = useFonts({
     SairaStencilOne_400Regular,
   });
-
-  let contextData = React.useContext(AuthContext);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,6 +30,7 @@ function Login({ navigation, setContainerState }) {
           <Text style={styles.headerText}>LOGIN</Text>
 
           <LoginForm
+            setLoading={setLoading}
             setContainerState={setContainerState}
             navigation={navigation}
             SairaStencilOne_400Regular={SairaStencilOne_400Regular}

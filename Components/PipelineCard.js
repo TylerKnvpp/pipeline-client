@@ -48,18 +48,18 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 10 },
     shadowOpacity: 0.2,
-    height: "90%",
+    height: "88%",
     width: 300,
     zIndex: 1,
   },
   unitLogo: {
     marginTop: 20,
-    height: 50,
+    height: 30,
   },
   cardPhoto: {
     borderRadius: 7,
     width: "100%",
-    height: 200,
+    height: "30%",
     zIndex: 2,
   },
   nickname: {

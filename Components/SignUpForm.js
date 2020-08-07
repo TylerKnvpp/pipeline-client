@@ -29,7 +29,6 @@ function SignUpForm({
   const inputRef = React.useRef();
 
   const handleSignUp = async () => {
-    console.log(formData);
     const { isValid, error, fieldError } = signUpValidator(formData);
 
     if (error) {
@@ -55,7 +54,6 @@ function SignUpForm({
 
         if (req.ok) {
           const res = await req.json();
-          console.log(res);
 
           if (!res.success) {
             Alert.alert(res.error);
@@ -65,11 +63,13 @@ function SignUpForm({
           if (res.success) {
             AsyncStorage.setItem("@uid", res.id);
             AsyncStorage.setItem("@token", res.token);
+            const stringified = JSON.stringify(res.user);
+            AsyncStorage.setItem("@userObject", stringified);
             setContainerState({
               loggedIn: true,
-              id: res.id,
-              token: res.token,
+              user: res.user,
             });
+            setLoading(true);
           }
         } else {
           const resErr = await req.json();

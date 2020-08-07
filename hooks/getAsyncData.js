@@ -6,7 +6,11 @@ const getAsyncData = async () => {
 
     const token = await AsyncStorage.getItem("@token");
 
-    return { uid, token };
+    const unParsed = await AsyncStorage.getItem("@userObject");
+
+    const userObject = JSON.parse(unParsed);
+
+    return { uid, token, userObject };
   } catch (err) {
     console.log(err);
   }

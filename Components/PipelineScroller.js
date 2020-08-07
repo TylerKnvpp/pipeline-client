@@ -4,7 +4,11 @@ import PipelineCard from "./PipelineCard";
 import PipelineModal from "./PipelineModal";
 import LoadingComponent from "./LoadingComponent";
 
-const PipelineScroller = ({ SairaStencilOne_400Regular, pipelines }) => {
+const PipelineScroller = ({
+  SairaStencilOne_400Regular,
+  pipelines,
+  handlePipelineSelect,
+}) => {
   const [showModal, toggleModal] = React.useState(false);
   const [modalIndex, setModalIndex] = React.useState();
 
@@ -17,6 +21,7 @@ const PipelineScroller = ({ SairaStencilOne_400Regular, pipelines }) => {
       <PipelineModal
         pipeline={pipelines[modalIndex]}
         toggleModal={toggleModal}
+        handlePipelineSelect={handlePipelineSelect}
       />
     );
   }
@@ -51,9 +56,9 @@ const PipelineScroller = ({ SairaStencilOne_400Regular, pipelines }) => {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: "100%",
+    minHeight: "90%",
     minWidth: "100%",
-    paddingVertical: 20,
+    paddingVertical: 10,
   },
   cardScroll: {
     flexDirection: "row",

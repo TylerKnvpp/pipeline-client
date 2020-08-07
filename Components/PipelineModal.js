@@ -1,5 +1,13 @@
 import React from "react";
-import { Button, Image, Modal, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Button,
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import {
   TouchableOpacity,
   ScrollView,
@@ -9,8 +17,39 @@ import {
 import DurationDetails from "./DurationDetails";
 import PSTCard from "./PSTCard";
 
-const PipelineModal = ({ toggleModal, pipeline }) => {
+import { AuthContext } from "../Context/AuthContext";
+
+import { postUserPipeline } from "../hooks/postUserPipeline";
+
+const PipelineModal = ({ toggleModal, pipeline, handlePipelineSelect }) => {
   const skillsRequired = pipeline.skillsRequired.join(" | ");
+
+  let authContextData = React.useContext(AuthContext);
+
+  const handleSelect = () => {
+    Alert.alert(
+      `${pipeline.name}`,
+      `You are selecting the training pipeline for ${pipeline.nickname}`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            if (authContextData.state.user._id && pipeline._id) {
+              handlePipelineSelect(pipeline._id);
+              return;
+            }
+            console.log("couldnt complete request");
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   return (
     <Modal
@@ -18,9 +57,6 @@ const PipelineModal = ({ toggleModal, pipeline }) => {
       animationType="slide"
       transparent={false}
       style={styles.modal}
-      onRequestClose={() => console.log("dismissed")}
-      onDismiss={() => console.log("dismissed")}
-      onRequestClose={() => console.log("dismissed")}
     >
       <View style={styles.modal}>
         <TouchableWithoutFeedback
@@ -76,12 +112,10 @@ const PipelineModal = ({ toggleModal, pipeline }) => {
               Select this pipeline to compare your scores against.
             </Text>
 
-            <TouchableOpacity
-              style={styles.viewButton}
-              onPress={() => toggleModal(true)}
-            >
+            <TouchableOpacity style={styles.viewButton} onPress={handleSelect}>
               <Text style={styles.viewButtonText}>Select Pipeline</Text>
             </TouchableOpacity>
+
             <Button
               style={styles.closeButton}
               title="Close"

@@ -3,32 +3,42 @@ import { View, Text, Button, StyleSheet, Dimensions } from "react-native";
 
 import { AuthContext } from "../Context/AuthContext";
 
-import { fetchUser } from "../hooks/getUserProfile";
+import { getPipelines } from "../hooks/getPipelines";
+
+import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-community/async-storage";
 
-const Home = ({ setContainerState, setUserStateData }) => {
+const Profile = ({
+  SairaStencilOne_400Regular,
+  setContainerState,
+  setUserStateData,
+  logoutRef,
+}) => {
   const [pipelines, setPipelines] = React.useState([]);
-  const [fetched, setFetched] = React.useState(false);
 
   let authContextData = React.useContext(AuthContext);
 
-  const fetchRef = React.useRef(false);
-
   const handleLogout = () => {
     AsyncStorage.clear();
+    logoutRef();
     setContainerState({
       loggedIn: false,
       token: null,
       id: null,
     });
+    setUserStateData({
+      user: {},
+      fetched: false,
+    });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.selectHeader}>
-        Lets fucking go {authContextData.state.user.email}
-      </Text>
-      <Button title="Logout" onPress={handleLogout} />
+      <TouchableOpacity onPress={handleLogout}>
+        <Text>{authContextData.state.user.email}</Text>
+        <Text>{authContextData.state.user.pipelineID.name}</Text>
+        <Text style={styles.selectHeader}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -51,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Profile;

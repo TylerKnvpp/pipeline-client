@@ -15,7 +15,7 @@ import { getPipelines } from "../hooks/getPipelines";
 
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-community/async-storage";
-import ProfileUserDataCard from "../Components/ProfileUserDataCard";
+import EditProfileDataCard from "../Components/EditProfileDataCard";
 
 const Profile = ({
   SairaStencilOne_400Regular,
@@ -23,10 +23,25 @@ const Profile = ({
   setUserStateData,
   logoutRef,
   navigation,
+  route,
 }) => {
   const [imageLoaded, setImageLoaded] = React.useState(false);
   const [imageLoadError, setImageLoadError] = React.useState(false);
   let authContextData = React.useContext(AuthContext);
+
+  const handleLogout = () => {
+    AsyncStorage.clear();
+    logoutRef();
+    setContainerState({
+      loggedIn: false,
+      token: null,
+      id: null,
+    });
+    setUserStateData({
+      user: {},
+      fetched: false,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,12 +53,11 @@ const Profile = ({
         resizeMode={"contain"}
         style={styles.image}
       />
-      <Text style={styles.username}>
-        @{authContextData.state.user.username}
-      </Text>
+      <Button title="Change Profile Picture" />
       <ScrollView style={styles.scroll}>
-        <ProfileUserDataCard
+        <EditProfileDataCard
           navigation={navigation}
+          setContainerState={setContainerState}
           SairaStencilOne_400Regular={SairaStencilOne_400Regular}
           user={authContextData.state.user}
         />

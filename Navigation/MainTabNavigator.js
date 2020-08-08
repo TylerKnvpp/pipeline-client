@@ -1,13 +1,12 @@
 import React from "react";
 
-import ProfileScreen from "../Screens/Profile";
+import ProfileScreenStack from "./ProfileScreenStack";
 import HomeScreen from "../Screens/Home";
 // import LogWorkoutScreen from "../Screens/Profile";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { UserContext } from "../Context/UserContext";
 import { AuthContext } from "../Context/AuthContext";
 
 import UserProfileSetupStackNav from "./UserProfileSetupStackNav";
@@ -70,9 +69,9 @@ function MainTabNavigator({
             )}
           </Tab.Screen>
 
-          <Tab.Screen name="Profile">
+          <Tab.Screen name="Profile" options={{ title: "Profile" }}>
             {(props) => (
-              <ProfileScreen
+              <ProfileScreenStack
                 {...props}
                 logoutRef={logoutRef}
                 setUserStateData={setUserStateData}

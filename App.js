@@ -79,7 +79,7 @@ export default function App() {
   }, []);
 
   const setContainerState = (input) => {
-    setState(input);
+    setState({ ...state, user: input });
   };
 
   const setUserStateData = (input) => {

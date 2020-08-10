@@ -1,7 +1,7 @@
 import React from "react";
 
 import ProfileScreenStack from "./ProfileScreenStack";
-import HomeScreen from "../Screens/Home";
+import HomeScreenStack from "./HomeScreenStack";
 // import LogWorkoutScreen from "../Screens/Profile";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -49,10 +49,12 @@ function MainTabNavigator({
     >
       {userData.pipelineID._id && userData.skills.length > 0 ? (
         <>
-          <Tab.Screen name="Home">
+          <Tab.Screen name="Home" options={{ title: "Home" }}>
             {(props) => (
-              <HomeScreen
+              <HomeScreenStack
                 {...props}
+                logoutRef={logoutRef}
+                setUserStateData={setUserStateData}
                 setContainerState={setContainerState}
                 SairaStencilOne_400Regular={SairaStencilOne_400Regular}
               />

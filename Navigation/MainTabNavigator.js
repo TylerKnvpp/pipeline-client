@@ -2,6 +2,7 @@ import React from "react";
 
 import ProfileScreenStack from "./ProfileScreenStack";
 import HomeScreenStack from "./HomeScreenStack";
+import LogWorkoutScreenStack from "./LogWorkoutScreenStack";
 // import LogWorkoutScreen from "../Screens/Profile";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -33,14 +34,14 @@ function MainTabNavigator({
             iconName = focused ? "ios-home" : "ios-home";
           } else if (route.name === "Profile") {
             iconName = focused ? "ios-person" : "ios-person";
-          } else if (route.name === "Log Workout") {
+          } else if (route.name === "Log PST") {
             iconName = "ios-add";
           }
           // returns icon for tab nav
           return (
             <Ionicons
               name={iconName}
-              size={route.name === "Log Workout" ? 32 : 24}
+              size={route.name === "Log PST" ? 32 : 24}
               color={focused ? "#007AFF" : "#c7c7cc"}
             />
           );
@@ -61,9 +62,9 @@ function MainTabNavigator({
             )}
           </Tab.Screen>
 
-          <Tab.Screen name="Log Workout">
+          <Tab.Screen name="Log PST">
             {(props) => (
-              <HomeScreen
+              <LogWorkoutScreenStack
                 {...props}
                 setContainerState={setContainerState}
                 SairaStencilOne_400Regular={SairaStencilOne_400Regular}

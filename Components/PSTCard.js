@@ -55,7 +55,7 @@ const PSTDetails = ({ workout }) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    marginBottom: 40,
+    marginBottom: 20,
   },
   minScoreLabel: {
     color: "red",

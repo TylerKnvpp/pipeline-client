@@ -30,8 +30,6 @@ const PostScroller = ({ resources }) => {
     setResults(result);
   };
 
-  console.log(resources);
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>RESOURCES &rarr;</Text>
@@ -112,7 +110,14 @@ const styles = StyleSheet.create({
   },
   postContainer: {
     marginHorizontal: 10,
+    marginVertical: 15,
     width: Dimensions.get("screen").width * 0.9,
+    shadowColor: "#444444",
+    shadowOpacity: 0.3,
+    shadowOffset: {
+      height: 4,
+      width: 4,
+    },
   },
   minScore: {
     color: "#8a8a8a",

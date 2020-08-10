@@ -1,15 +1,40 @@
 import React from "react";
+import { Button } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
-import LogWorkoutScreen from "../Screens/Home";
+import LogWorkoutScreen from "../Screens/LogWorkout";
 
-const LogWorkout = createStackNavigator();
+const PSTStack = createStackNavigator();
 
-function LogWorkoutStackScreen() {
+function LogWorkoutStackScreen({
+  setContainerState,
+  SairaStencilOne_400Regular,
+}) {
   return (
-    <LogWorkout.Navigator>
-      <LogWorkout.Screen name="LogWorkout" component={LogWorkoutScreen} />
-    </LogWorkout.Navigator>
+    <PSTStack.Navigator>
+      <PSTStack.Screen
+        name="Log Workout"
+        // options={{
+        //   headerRight: () => (
+        //     <Button
+        //       title="Pipeline"
+        //       onPress={() => navigation.navigate("Pipeline")}
+        //     />
+        //   ),
+        //   headerRightContainerStyle: {
+        //     paddingRight: 10,
+        //   },
+        // }}
+      >
+        {(props) => (
+          <LogWorkoutScreen
+            {...props}
+            setContainerState={setContainerState}
+            SairaStencilOne_400Regular={SairaStencilOne_400Regular}
+          />
+        )}
+      </PSTStack.Screen>
+    </PSTStack.Navigator>
   );
 }
 

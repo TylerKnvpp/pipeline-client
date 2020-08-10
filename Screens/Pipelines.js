@@ -7,14 +7,11 @@ import { getPipelines } from "../hooks/getPipelines";
 import { postUserPipeline } from "../hooks/postUserPipeline";
 
 import PipelineScroller from "../Components/PipelineScroller";
+import SplashScreen from "../Screens/SplashScreen";
 
-const SelectPipeline = ({
-  SairaStencilOne_400Regular,
-
-  navigation,
-  route,
-}) => {
+const Pipelines = ({ SairaStencilOne_400Regular, navigation, route }) => {
   const [pipelines, setPipelines] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   let authContextData = React.useContext(AuthContext);
   const uid = authContextData.state.user._id;
@@ -24,6 +21,7 @@ const SelectPipeline = ({
       getPipelines()
         .then((pipelines) => {
           setPipelines(pipelines);
+          setLoading(false);
         })
         .catch((err) => console.log(err));
     }
@@ -36,22 +34,18 @@ const SelectPipeline = ({
     }
   };
 
+  if (loading) {
+    return <SplashScreen />;
+  }
+
   return (
     <View style={styles.container}>
-      {!authContextData.state.user.pipelineID._id ? (
-        <>
-          <Text style={styles.selectHeader}>
-            Please select a training pipeline
-          </Text>
-          <PipelineScroller
-            SairaStencilOne_400Regular={SairaStencilOne_400Regular}
-            handlePipelineSelect={handlePipelineSelect}
-            {...pipelines}
-          />
-        </>
-      ) : (
-        <Text>loaded</Text>
-      )}
+      <Text style={styles.selectHeader}>Available Pipelines</Text>
+      <PipelineScroller
+        SairaStencilOne_400Regular={SairaStencilOne_400Regular}
+        handlePipelineSelect={handlePipelineSelect}
+        {...pipelines}
+      />
     </View>
   );
 };
@@ -74,4 +68,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SelectPipeline;
+export default Pipelines;

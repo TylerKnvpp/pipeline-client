@@ -48,7 +48,11 @@ const EditProfileDataCard = ({
     if (isValid) {
       postUpdateUserProfile(user._id, newDataRequest).then((res) => {
         if (res.success) {
-          setContainerState(res.user);
+          setContainerState({
+            id: res.user._id,
+            loggedIn: true,
+            user: res.user,
+          });
           navigation.navigate("Profile");
         }
         if (!res.success) {
@@ -65,6 +69,7 @@ const EditProfileDataCard = ({
         <View style={styles.textContainer}>
           <Text style={styles.infoTitle}>Username</Text>
           <TextInput
+            autoCapitalize={"none"}
             style={styles.input}
             value={state.username}
             onChangeText={(input) => {
@@ -78,7 +83,7 @@ const EditProfileDataCard = ({
         </View>
 
         <View style={styles.textContainer}>
-          <Text style={styles.infoTitle}>Name</Text>
+          <Text style={styles.infoTitle}>First Name</Text>
           <TextInput
             style={styles.input}
             value={state.firstName}
@@ -93,7 +98,7 @@ const EditProfileDataCard = ({
         </View>
 
         <View style={styles.textContainer}>
-          <Text style={styles.infoTitle}>Name</Text>
+          <Text style={styles.infoTitle}>Last Name</Text>
           <TextInput
             style={styles.input}
             value={state.lastName}

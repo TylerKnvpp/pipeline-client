@@ -10,7 +10,7 @@ import PipelineScroller from "../Components/PipelineScroller";
 
 const SelectPipeline = ({
   SairaStencilOne_400Regular,
-
+  setContainerState,
   navigation,
   route,
 }) => {
@@ -31,14 +31,20 @@ const SelectPipeline = ({
 
   const handlePipelineSelect = (input) => {
     if (uid && input) {
-      postUserPipeline(uid, input);
+      postUserPipeline(uid, input).then((res) => {
+        setContainerState({
+          id: res.user._id,
+          user: res.user,
+          loggedIn: true,
+        });
+      });
       navigation.navigate("Home");
     }
   };
 
   return (
     <View style={styles.container}>
-      {!authContextData.state.user.pipelineID._id ? (
+      {authContextData.state.user.pipelineID == undefined ? (
         <>
           <Text style={styles.selectHeader}>
             Please select a training pipeline

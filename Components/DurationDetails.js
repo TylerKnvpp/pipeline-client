@@ -13,7 +13,7 @@ const DurationDetails = ({ phase }) => {
       >
         <Text style={styles.phaseTitle}>{phase.phaseTitle}</Text>
         <Ionicons
-          name={!show ? "ios-arrow-down" : "ios-arrow-up"}
+          name={!show ? "ios-add" : "ios-arrow-up"}
           size={32}
           color="black"
         />
@@ -39,6 +39,12 @@ const DurationDetails = ({ phase }) => {
 
 const styles = StyleSheet.create({
   accordionContainer: {
+    // borderTopColor: "black",
+    // borderTopWidth: 2,
+    alignItems: "center",
+    borderBottomColor: "#8a8a8a",
+    borderBottomWidth: 1,
+    paddingVertical: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: 20,

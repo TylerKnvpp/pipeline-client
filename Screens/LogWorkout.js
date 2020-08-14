@@ -18,8 +18,7 @@ import SplashScreen from "./SplashScreen";
 
 import PSTCard from "../Components/PSTCard";
 
-const LogWorkout = ({ setContainerState, setUserStateData }) => {
-  const [formData, setFormData] = React.useState({});
+const LogWorkout = ({ setContainerState, setUserStateData, navigation }) => {
   const [pipelineState, setPipelineState] = React.useState();
   const [workoutCollection, setWorkoutCollection] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -37,7 +36,6 @@ const LogWorkout = ({ setContainerState, setUserStateData }) => {
 
         let ordered = copy.sort((a, b) => a.order - b.order);
 
-        console.log(ordered);
         setWorkoutCollection(ordered);
         // } else {
         //   setWorkoutCollection(res.records);
@@ -64,7 +62,10 @@ const LogWorkout = ({ setContainerState, setUserStateData }) => {
         />
         <Text style={styles.nickname}>{pipelineState.nickname}</Text>
         <Text style={styles.selectHeader}>PHYSICAL SCREENING TEST</Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("New PST")}
+        >
           <Text style={styles.buttonText}>LOG NEW PST</Text>
         </TouchableOpacity>
       </View>

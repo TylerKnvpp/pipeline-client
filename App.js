@@ -55,6 +55,7 @@ export default function App() {
   useEffect(() => {
     let uid;
     let token;
+    // if (state.id != undefined) {
     getAsyncData()
       .then((asyncObject) => {
         if (asyncObject.uid !== null || asyncObject.token !== null) {
@@ -76,10 +77,25 @@ export default function App() {
           }
         });
       });
+    // }
   }, []);
 
+  const setAuthState = (input) => {
+    setState({
+      token: input.token,
+      user: input.user,
+      id: input.id,
+      loggedIn: input.loggedIn,
+    });
+  };
+
   const setContainerState = (input) => {
-    setState({ ...state, user: input });
+    setState({
+      ...state,
+      user: input.user,
+      id: input.id,
+      loggedIn: input.loggedIn,
+    });
   };
 
   const setUserStateData = (input) => {
@@ -90,37 +106,31 @@ export default function App() {
     loggedInRef.current = false;
   };
 
-  // if (loading) {
-  //   return <SplashScreen />;
-  // }
+  const setLoginRef = (input) => {
+    loggedInRef.current = input;
+  };
 
   if (state.id == undefined) {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            // component={HomeScreen}
-            options={{ headerShown: false }}
-          >
+          <Stack.Screen name="Login" options={{ headerShown: false }}>
             {(props) => (
               <LoginScreen
                 {...props}
                 setLoading={setLoading}
-                setContainerState={setContainerState}
+                setContainerState={setAuthState}
+                setLoginRef={setLoginRef}
               />
             )}
           </Stack.Screen>
-          <Stack.Screen
-            name="SignUp"
-            // component={HomeScreen}
-            options={{ headerShown: false }}
-          >
+          <Stack.Screen name="SignUp" options={{ headerShown: false }}>
             {(props) => (
               <SignUpScreen
                 {...props}
                 setLoading={setLoading}
-                setContainerState={setContainerState}
+                setContainerState={setAuthState}
+                setLoginRef={setLoginRef}
               />
             )}
           </Stack.Screen>
@@ -129,7 +139,7 @@ export default function App() {
     );
   }
 
-  if (loggedInRef) {
+  if (state.id != undefined) {
     return (
       <AuthContext.Provider
         value={{
@@ -140,8 +150,6 @@ export default function App() {
             }),
         }}
       >
-        {/* <UserContext.Provider value={userData.user}> */}
-
         <NavigationContainer>
           <MainTabNavigator
             logoutRef={logoutRef}
@@ -150,7 +158,6 @@ export default function App() {
             setUserStateData={setUserStateData}
           />
         </NavigationContainer>
-        {/* </UserContext.Provider> */}
       </AuthContext.Provider>
     );
   }

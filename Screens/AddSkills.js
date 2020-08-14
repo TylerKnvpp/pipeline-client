@@ -9,7 +9,7 @@ import { postUserSkills } from "../hooks/postUserSkills";
 
 import { AuthContext } from "../Context/AuthContext";
 
-const AddSkills = ({ navigation }) => {
+const AddSkills = ({ navigation, setContainerState }) => {
   const [selectedState, setSelectedState] = React.useState([]);
   const [uidState, setUID] = React.useState(null);
 
@@ -31,9 +31,16 @@ const AddSkills = ({ navigation }) => {
 
   const handleSave = () => {
     if (uid && selectedState.length > 0) {
-      postUserSkills(uid, selectedState).then((res) => console.log(res));
+      postUserSkills(uid, selectedState).then((res) => {
+        console.log("response", res);
+        setContainerState({
+          id: res._id,
+          loggedIn: true,
+          user: res,
+        });
+      });
 
-      if (!authContextData.state.user.pipelineID._id) {
+      if (authContextData.state.user.pipelineID == undefined) {
         navigation.navigate("Select Pipeline");
         return;
       }
@@ -50,10 +57,8 @@ const AddSkills = ({ navigation }) => {
         </Text>
         <Image
           style={styles.image}
-          source={{
-            uri:
-              "https://onea-profile-pictures.s3.us-east-2.amazonaws.com/sf-soliders.jpeg",
-          }}
+          source={require("../assets/sf-soliders.jpeg")}
+          defaultSource={require("../assets/sf-soliders.jpeg")}
           resizeMode={"contain"}
         />
       </View>
@@ -95,7 +100,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     opacity: 0.7,
     textAlign: "center",
-    top: 80,
+    top: 100,
     left: 25,
     width: "90%",
     zIndex: 1,

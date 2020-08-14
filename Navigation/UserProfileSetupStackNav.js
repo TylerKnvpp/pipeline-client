@@ -15,18 +15,6 @@ function UserProfileSetupStackNav({
 
   return (
     <Stack.Navigator>
-      {/* {authContextData.state.user.skills.length === 0 ? ( */}
-
-      <Stack.Screen name="Home">
-        {(props) => (
-          <HomeScreen
-            {...props}
-            setContainerState={setContainerState}
-            SairaStencilOne_400Regular={SairaStencilOne_400Regular}
-          />
-        )}
-      </Stack.Screen>
-
       <Stack.Screen name="Add Skills">
         {(props) => (
           <AddSkillsScreen
@@ -36,19 +24,16 @@ function UserProfileSetupStackNav({
           />
         )}
       </Stack.Screen>
-      {/* ) : ( */}
-      <>
-        <Stack.Screen name="Select Pipeline">
-          {(props) => (
-            <SelectPipelineScreen
-              {...props}
-              setContainerState={setContainerState}
-              SairaStencilOne_400Regular={SairaStencilOne_400Regular}
-            />
-          )}
-        </Stack.Screen>
-      </>
-      {/* )} */}
+
+      <Stack.Screen name="Select Pipeline">
+        {(props) => (
+          <SelectPipelineScreen
+            {...props}
+            setContainerState={setContainerState}
+            SairaStencilOne_400Regular={SairaStencilOne_400Regular}
+          />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }

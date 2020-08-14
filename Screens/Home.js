@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Dimensions,
   SafeAreaView,
+  Modal,
+  Alert,
 } from "react-native";
 
 import { AuthContext } from "../Context/AuthContext";
@@ -20,13 +22,38 @@ import PostScroller from "../Components/PostScroller";
 import { ScrollView } from "react-native-gesture-handler";
 import UserLatestScoreScroller from "../Components/UserLatestScoreScroller";
 
-const Home = ({ setContainerState, setUserStateData }) => {
+const Home = ({ setContainerState, setUserStateData, navigation }) => {
   const [resourceState, setResources] = React.useState([]);
   const [fetched, setFetched] = React.useState(false);
 
   let authContextData = React.useContext(AuthContext);
 
-  const fetchRef = React.useRef(false);
+  const user = authContextData.state.user;
+
+  const alertRef = React.useRef(false);
+
+  if (!alertRef.current && user.username == undefined) {
+    Alert.alert(
+      `Update Profile`,
+      `Your profile is incomplete. Would you like to add some info?`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            navigation.navigate("Profile");
+            console.log("couldnt complete request");
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+    alertRef.current = true;
+  }
 
   const handleLogout = () => {
     AsyncStorage.clear();

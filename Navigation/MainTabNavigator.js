@@ -17,7 +17,6 @@ const Tab = createBottomTabNavigator();
 function MainTabNavigator({
   setContainerState,
   SairaStencilOne_400Regular,
-
   setUserStateData,
   logoutRef,
 }) {
@@ -48,7 +47,7 @@ function MainTabNavigator({
         },
       })}
     >
-      {userData.pipelineID._id && userData.skills.length > 0 ? (
+      {userData.pipelineID != undefined && userData.skills.length > 0 ? (
         <>
           <Tab.Screen name="Home" options={{ title: "Home" }}>
             {(props) => (

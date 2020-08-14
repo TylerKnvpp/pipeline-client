@@ -7,7 +7,7 @@ import {
 } from "@expo-google-fonts/saira-stencil-one";
 import SignUpForm from "../Components/SignUpForm";
 
-function SignUp({ navigation, setContainerState }) {
+function SignUp({ navigation, setContainerState, setLoading, setLoginRef }) {
   let [fontsLoaded] = useFonts({
     SairaStencilOne_400Regular,
   });
@@ -20,9 +20,11 @@ function SignUp({ navigation, setContainerState }) {
         <>
           <Text style={styles.headerText}>SIGN UP</Text>
           <SignUpForm
+            setLoading={setLoading}
             setContainerState={setContainerState}
             navigation={navigation}
             SairaStencilOne_400Regular={SairaStencilOne_400Regular}
+            setLoginRef={setLoginRef}
           />
         </>
       )}

@@ -19,6 +19,8 @@ function SignUpForm({
   navigation,
   SairaStencilOne_400Regular,
   setContainerState,
+  setLoading,
+  setLoginRef,
 }) {
   const [formData, setFormData] = useState({
     email: "",
@@ -67,8 +69,11 @@ function SignUpForm({
             AsyncStorage.setItem("@userObject", stringified);
             setContainerState({
               loggedIn: true,
+              id: res.user._id,
+              token: res.user.token,
               user: res.user,
             });
+            setLoginRef(true);
             setLoading(true);
           }
         } else {

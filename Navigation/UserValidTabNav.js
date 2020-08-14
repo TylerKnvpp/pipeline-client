@@ -31,14 +31,14 @@ function UserProfileSetupTabNav({
             iconName = focused ? "ios-home" : "ios-home";
           } else if (route.name === "Profile") {
             iconName = focused ? "ios-person" : "ios-person";
-          } else if (route.name === "Log Workout") {
+          } else if (route.name === "PST Standards") {
             iconName = "ios-add";
           }
           // You can return any component that you like here!
           return (
             <Ionicons
               name={iconName}
-              size={route.name === "Log Workout" ? 32 : 24}
+              size={route.name === "PST Standards" ? 32 : 24}
               color={focused ? "#007AFF" : "#c7c7cc"}
             />
           );
@@ -55,7 +55,7 @@ function UserProfileSetupTabNav({
         )}
       </Tab.Screen>
 
-      <Tab.Screen name="Log Workout">
+      <Tab.Screen name="PST Standards">
         {(props) => (
           <LogWorkoutScreenStack
             {...props}

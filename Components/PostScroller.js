@@ -38,6 +38,7 @@ const PostScroller = ({ resources }) => {
         {resources.length > 0 ? (
           resources.map((res) => (
             <TouchableOpacity
+              activeOpacity={0.9}
               key={res._id}
               style={styles.postContainer}
               onPress={() => _handlePressButtonAsync(res.url)}
@@ -159,11 +160,12 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   header: {
-    color: "#8a8a8a",
+    color: "#444444",
     fontSize: 24,
     fontWeight: "900",
+    fontFamily: "SairaStencilOne_400Regular",
     marginTop: 20,
-    marginLeft: 10,
+    marginLeft: 20,
     textAlign: "left",
     textTransform: "uppercase",
   },

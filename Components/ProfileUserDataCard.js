@@ -32,7 +32,9 @@ const ProfileUserDataCard = ({
 
         <View style={styles.textContainer}>
           <Text style={styles.infoTitle}>Pipeline</Text>
-          <Text style={styles.pipeline}>{user.pipelineID.nickname}</Text>
+          <Text style={styles.pipeline}>
+            {user.pipelineID != undefined ? user.pipelineID.nickname : ""}
+          </Text>
         </View>
       </View>
 

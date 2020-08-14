@@ -85,6 +85,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: Dimensions.get("screen").width * 0.3,
   },
+  userScoreContainer: {
+    borderWidth: 2,
+    borderColor: "blue",
+    borderRadius: 5,
+    flexDirection: "column",
+    marginHorizontal: 10,
+    height: 80,
+    padding: 5,
+    textAlign: "center",
+    width: Dimensions.get("screen").width * 0.3,
+  },
   minScore: {
     color: "#8a8a8a",
     fontFamily: "SairaStencilOne_400Regular",
@@ -129,7 +140,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "900",
     marginTop: 20,
-    textAlign: "center",
+    textAlign: "left",
+    marginLeft: 10,
     textTransform: "uppercase",
   },
   optScoreContainer: {

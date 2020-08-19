@@ -9,7 +9,7 @@ import { getUserPSTs } from "../hooks/getUserPSTs";
 
 import PreviousPSTCard from "../Components/PreviousPSTCard";
 import FailedPSTCard from "../Components/FailedPSTCard";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
 const PastPSTs = () => {
   const [pstState, setPSTState] = React.useState([]);
@@ -34,12 +34,17 @@ const PastPSTs = () => {
         contentContainerStyle={styles.contentContainer}
         scrollEnabled
       >
-        {pstState.length ? (
+        {pstState.length !== 0 ? (
           pstState.map((pst) => {
             return <PreviousPSTCard key={pst._id} pst={pst} />;
           })
         ) : (
-          <Text>Loading..</Text>
+          <>
+            <Text style={styles.noDataText}>Couldn't find any psts.</Text>
+            <TouchableOpacity style={styles.buttonActive}>
+              <Text style={styles.buttonText}>Log a PST</Text>
+            </TouchableOpacity>
+          </>
         )}
       </ScrollView>
     </View>
@@ -47,6 +52,28 @@ const PastPSTs = () => {
 };
 
 const styles = StyleSheet.create({
+  noDataText: {
+    fontSize: 24,
+    fontWeight: "800",
+    marginVertical: 40,
+    textAlign: "center",
+  },
+  buttonActive: {
+    backgroundColor: "#007AFF",
+    borderRadius: 10,
+    marginRight: "auto",
+    marginTop: 20,
+    marginLeft: "auto",
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    width: "80%",
+  },
+  buttonText: {
+    color: "white",
+    fontFamily: "SairaStencilOne_400Regular",
+    fontSize: 18,
+    textAlign: "center",
+  },
   scrollContainer: {
     height: "100%",
     width: "100%",

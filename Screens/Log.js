@@ -86,7 +86,6 @@ const Log = ({ navigation, SairaStencilOne_400Regular }) => {
         evolutions.push(formData[id]);
       });
       postUserPST(id, evolutions, unitInsignia, nickname).then((res) => {
-        console.log(res);
         if (res.success) {
           setSubmitted({
             successful: true,
@@ -109,8 +108,8 @@ const Log = ({ navigation, SairaStencilOne_400Regular }) => {
     <ScrollView style={styles.pageContainer}>
       <Image
         defaultSource={require("../assets/navy-seal-insignia.png")}
-        onLoad={() => console.log("loaded")}
-        onError={() => console.log("error loading")}
+        // onLoad={() => console.log("loaded")}
+        // onError={() => console.log("error loading")}
         style={styles.insignia}
         source={{ uri: pipelineState.unitInsignia }}
       />

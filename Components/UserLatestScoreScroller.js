@@ -39,21 +39,6 @@ const UserLatestScoreScroller = ({ title, workouts, theme }) => {
     }
   }
 
-  //   function scoreRender(workout) {
-  //     if (workout.$numberDecimal !== undefined) {
-  //       let value = workout.numberDecimal;
-  //       let string = value.toString();
-  //       console.log("string", string);
-  //       if (string.includes(".")) {
-  //         let splitThenJoined = string.split(".").join(":");
-  //         return splitThenJoined;
-  //       }
-  //       return string;
-  //     } else {
-  //       return workout;
-  //     }
-  //   }
-
   return (
     <View style={styles.container}>
       <Text style={headerSelector()}>{title} &rarr;</Text>

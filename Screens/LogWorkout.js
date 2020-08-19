@@ -55,8 +55,8 @@ const LogWorkout = ({ setContainerState, setUserStateData, navigation }) => {
       <View>
         <Image
           defaultSource={require("../assets/navy-seal-insignia.png")}
-          onLoad={() => console.log("loaded")}
-          onError={() => console.log("error loading")}
+          // onLoad={() => console.log("loaded")}
+          // onError={() => console.log("error loading")}
           style={styles.insignia}
           source={{ uri: pipelineState.unitInsignia }}
         />

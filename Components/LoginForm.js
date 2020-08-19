@@ -22,8 +22,7 @@ function LoginForm({
   navigation,
   SairaStencilOne_400Regular,
   setContainerState,
-  setLoginRef,
-  setLoading,
+  loggedInRef,
 }) {
   const [loading, toggleLoading] = useState(true);
   const [formData, setFormData] = useState({
@@ -50,6 +49,7 @@ function LoginForm({
         const res = await req.json();
 
         if (res.success) {
+          loggedInRef.current = true;
           AsyncStorage.setItem("@uid", res.id);
           AsyncStorage.setItem("@token", res.token);
           const stringified = JSON.stringify(res.user);
@@ -57,11 +57,10 @@ function LoginForm({
 
           setContainerState({
             loggedIn: true,
-            id: res.user._id,
-            token: res.user.token,
+            id: res.user.id,
+            token: res.token,
             user: res.user,
           });
-          setLoginRef(true);
         }
       } else {
         const resErr = await req.json();

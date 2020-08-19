@@ -12,10 +12,11 @@ function ProfileScreenStack({
   setContainerState,
   SairaStencilOne_400Regular,
   logoutRef,
+  loggedInRef,
 }) {
   const handleLogout = () => {
     AsyncStorage.clear();
-    logoutRef();
+    loggedInRef.current = false;
     setContainerState({
       loggedIn: false,
       token: null,

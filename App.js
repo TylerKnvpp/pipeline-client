@@ -47,6 +47,7 @@ export default function App() {
   });
 
   const loggedInRef = React.useRef(false);
+  const uidRef = React.useRef();
 
   let [fontsLoaded] = useFonts({
     SairaStencilOne_400Regular,
@@ -55,20 +56,22 @@ export default function App() {
   useEffect(() => {
     let uid;
     let token;
-    // if (state.id != undefined) {
+    // if (uidRef != undefined) {
     getAsyncData()
       .then((asyncObject) => {
         if (asyncObject.uid !== null || asyncObject.token !== null) {
+          loggedInRef.current = true;
           uid = asyncObject.uid;
           token = asyncObject.token;
+          setState({ ...state, token: token, id: uid, loggedIn: true });
+        } else {
+          setLoading(false);
         }
       })
       .then(() => {
         fetchUser(uid).then((userObj) => {
           setState({
-            loggedIn: true,
-            id: uid,
-            token: token,
+            ...state,
             user: userObj.user,
           });
           if (userObj.success) {
@@ -102,15 +105,11 @@ export default function App() {
     setUserData(input);
   };
 
-  const logoutRef = () => {
-    loggedInRef.current = false;
-  };
-
   const setLoginRef = (input) => {
     loggedInRef.current = input;
   };
 
-  if (state.id == undefined) {
+  if (loggedInRef.current === false && !loading) {
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -118,6 +117,7 @@ export default function App() {
             {(props) => (
               <LoginScreen
                 {...props}
+                loggedInRef={loggedInRef}
                 setLoading={setLoading}
                 setContainerState={setAuthState}
                 setLoginRef={setLoginRef}
@@ -127,6 +127,7 @@ export default function App() {
           <Stack.Screen name="SignUp" options={{ headerShown: false }}>
             {(props) => (
               <SignUpScreen
+                loggedInRef={loggedInRef}
                 {...props}
                 setLoading={setLoading}
                 setContainerState={setAuthState}
@@ -139,7 +140,11 @@ export default function App() {
     );
   }
 
-  if (state.id != undefined) {
+  if (loggedInRef.current === true && loading) {
+    return <SplashScreen />;
+  }
+
+  if (loggedInRef.current === true && !loading) {
     return (
       <AuthContext.Provider
         value={{
@@ -152,7 +157,7 @@ export default function App() {
       >
         <NavigationContainer>
           <MainTabNavigator
-            logoutRef={logoutRef}
+            loggedInRef={loggedInRef}
             SairaStencilOne_400Regular={SairaStencilOne_400Regular}
             setContainerState={setContainerState}
             setUserStateData={setUserStateData}

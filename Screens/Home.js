@@ -64,8 +64,6 @@ const Home = ({ setContainerState, setUserStateData, navigation }) => {
     });
   };
 
-  // console.log(authContextData.state.user.pipelineID._id);
-
   React.useEffect(() => {
     getPipelineResources(pid).then((res) => {
       if (res.resources && resourceState.length === 0) {
@@ -77,19 +75,20 @@ const Home = ({ setContainerState, setUserStateData, navigation }) => {
   const pid = authContextData.state.user.pipelineID._id;
   const workouts = authContextData.state.user.pipelineID.workouts;
   const coverPhoto = authContextData.state.user.pipelineID.pipelineCoverPhoto;
+  const pipelineName = authContextData.state.user.pipelineID.nickname;
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ flex: 0 }}>
-      <HomeHero url={coverPhoto} />
+      <HomeHero url={coverPhoto} pipelineName={pipelineName} />
       {workouts.length > 0 ? (
         <>
           <ScoresScroller
-            title={"Minimum Scores"}
+            title={"PST Minimum Scores"}
             theme={"minimum"}
             workouts={workouts}
           />
           <OptScoreScroller
-            title={"Optimum Scores"}
+            title={"PST Optimum Scores"}
             theme={"optimum"}
             workouts={workouts}
           />

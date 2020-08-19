@@ -11,7 +11,13 @@ import {
   SairaStencilOne_400Regular,
 } from "@expo-google-fonts/saira-stencil-one";
 
-function Login({ navigation, setContainerState, setLoginRef, setLoading }) {
+function Login({
+  navigation,
+  setContainerState,
+  setLoginRef,
+  setLoading,
+  loggedInRef,
+}) {
   let [fontsLoaded] = useFonts({
     SairaStencilOne_400Regular,
   });
@@ -25,6 +31,7 @@ function Login({ navigation, setContainerState, setLoginRef, setLoading }) {
           <Text style={styles.headerText}>LOGIN</Text>
 
           <LoginForm
+            loggedInRef={loggedInRef}
             setLoading={setLoading}
             setContainerState={setContainerState}
             navigation={navigation}

@@ -32,12 +32,13 @@ const AddSkills = ({ navigation, setContainerState }) => {
   const handleSave = () => {
     if (uid && selectedState.length > 0) {
       postUserSkills(uid, selectedState).then((res) => {
-        console.log("response", res);
-        setContainerState({
-          id: res._id,
-          loggedIn: true,
-          user: res,
-        });
+        if (res.success) {
+          setContainerState({
+            id: res.user._id,
+            loggedIn: true,
+            user: res.user,
+          });
+        }
       });
 
       if (authContextData.state.user.pipelineID == undefined) {

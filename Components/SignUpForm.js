@@ -20,7 +20,8 @@ function SignUpForm({
   SairaStencilOne_400Regular,
   setContainerState,
   setLoading,
-  setLoginRef,
+
+  loggedInRef,
 }) {
   const [formData, setFormData] = useState({
     email: "",
@@ -63,18 +64,18 @@ function SignUpForm({
           }
 
           if (res.success) {
+            loggedInRef.current = true;
             AsyncStorage.setItem("@uid", res.id);
             AsyncStorage.setItem("@token", res.token);
             const stringified = JSON.stringify(res.user);
             AsyncStorage.setItem("@userObject", stringified);
+
             setContainerState({
               loggedIn: true,
-              id: res.user._id,
-              token: res.user.token,
+              id: res.user.id,
+              token: res.token,
               user: res.user,
             });
-            setLoginRef(true);
-            setLoading(true);
           }
         } else {
           const resErr = await req.json();

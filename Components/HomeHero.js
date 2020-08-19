@@ -1,18 +1,19 @@
 import React from "react";
 import { Image, StyleSheet, Text, View, Dimensions } from "react-native";
 
-const HomeHero = ({ url }) => {
+const HomeHero = ({ url, pipelineName }) => {
   const [loaded, setLoaded] = React.useState(false);
   const [error, setError] = React.useState(false);
 
   return (
     <View style={styles.heroContainer}>
-      <Text style={styles.textOver}>BUDS</Text>
+      <Text style={styles.textOver}>{pipelineName}</Text>
       <Image
         style={styles.heroImage}
         defaultSource={require("../assets/sf-soliders.jpeg")}
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}
+        resizeMethod={"scale"}
         source={{ uri: url }}
       />
     </View>
@@ -36,11 +37,13 @@ const styles = StyleSheet.create({
     width: "100%",
     zIndex: 1,
   },
-  heroContainer: {},
-  heroImage: {
+  heroContainer: {
     height: Dimensions.get("screen").height * 0.31,
+  },
+  heroImage: {
+    height: "100%",
     width: "100%",
-    resizeMode: "contain",
+    // resizeMode: "",
     marginBottom: 0,
     zIndex: -1,
   },

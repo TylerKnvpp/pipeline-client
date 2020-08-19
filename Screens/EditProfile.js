@@ -8,14 +8,17 @@ import {
   SafeAreaView,
   Image,
 } from "react-native";
+import Constants from "expo-constants";
 
 import { AuthContext } from "../Context/AuthContext";
 
-import { getPipelines } from "../hooks/getPipelines";
+import { postUserProfilePic } from "../hooks/postUserProfilePic";
 
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-community/async-storage";
 import EditProfileDataCard from "../Components/EditProfileDataCard";
+
+import * as ImagePicker from "expo-image-picker";
 
 const Profile = ({
   SairaStencilOne_400Regular,
@@ -28,6 +31,8 @@ const Profile = ({
   const [imageLoaded, setImageLoaded] = React.useState(false);
   const [imageLoadError, setImageLoadError] = React.useState(false);
   let authContextData = React.useContext(AuthContext);
+
+  const [imageState, setImage] = React.useState(null);
 
   const handleLogout = () => {
     AsyncStorage.clear();
@@ -43,17 +48,61 @@ const Profile = ({
     });
   };
 
+  React.useEffect(() => {
+    (async () => {
+      if (Constants.platform.ios) {
+        const {
+          status,
+        } = await ImagePicker.requestCameraRollPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    setImage;
+    const uid = authContextData.state.user._id;
+
+    if (!result.cancelled) {
+      setImage(result);
+
+      const img = {
+        uri: result.uri,
+        type: result.type,
+        name:
+          result.fileName || result.uri.substr(result.uri.lastIndexOf("/") + 1),
+      };
+
+      postUserProfilePic(uid, img);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Image
-        defaultSource={require("../assets/avatar.png")}
-        source={{ uri: authContextData.state.user.profilePicture }}
+        defaultSource={
+          imageState ? { uri: imageState.uri } : require("../assets/avatar.png")
+        }
+        source={{
+          uri: imageState
+            ? imageState.uri
+            : authContextData.state.user.profilePicture,
+        }}
         onLoad={() => setImageLoaded(true)}
         onError={() => setImageLoadError(true)}
         resizeMode={"contain"}
         style={styles.image}
       />
-      <Button title="Change Profile Picture" />
+      <Button title="Change Profile Picture" onPress={pickImage} />
       <ScrollView style={styles.scroll}>
         <EditProfileDataCard
           navigation={navigation}

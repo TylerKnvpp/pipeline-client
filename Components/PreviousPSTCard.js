@@ -16,8 +16,6 @@ const PreviousPSTCard = ({ pst }) => {
 
   const date = moment("2020-08-12T18:51:30.113Z").format("MM/DD/YYYY");
 
-  console.log(pst.passedUserEvolutions);
-
   return (
     <TouchableOpacity
       style={styles.card}

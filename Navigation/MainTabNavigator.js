@@ -18,7 +18,7 @@ function MainTabNavigator({
   setContainerState,
   SairaStencilOne_400Regular,
   setUserStateData,
-  logoutRef,
+  loggedInRef,
 }) {
   let authContextData = React.useContext(AuthContext);
   let userData = authContextData.state.user;
@@ -53,7 +53,6 @@ function MainTabNavigator({
             {(props) => (
               <HomeScreenStack
                 {...props}
-                logoutRef={logoutRef}
                 setUserStateData={setUserStateData}
                 setContainerState={setContainerState}
                 SairaStencilOne_400Regular={SairaStencilOne_400Regular}
@@ -75,7 +74,7 @@ function MainTabNavigator({
             {(props) => (
               <ProfileScreenStack
                 {...props}
-                logoutRef={logoutRef}
+                loggedInRef={loggedInRef}
                 setUserStateData={setUserStateData}
                 setContainerState={setContainerState}
                 SairaStencilOne_400Regular={SairaStencilOne_400Regular}

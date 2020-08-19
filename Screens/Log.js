@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     height: Dimensions.get("screen").height * 0.27,
+    height: "auto",
     marginBottom: 10,
   },
   inputTimeContainer: {

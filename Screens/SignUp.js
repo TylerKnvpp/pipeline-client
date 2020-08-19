@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { SafeAreaView, Text, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from "react-native";
 
 import {
   useFonts,
@@ -13,29 +18,22 @@ function SignUp({
   setLoading,
   setLoginRef,
   loggedInRef,
+  SairaStencilOne_400Regular,
 }) {
-  let [fontsLoaded] = useFonts({
-    SairaStencilOne_400Regular,
-  });
-
   return (
-    <SafeAreaView style={styles.container}>
-      {!fontsLoaded ? (
-        <Text>Loading...</Text>
-      ) : (
-        <>
-          <Text style={styles.headerText}>SIGN UP</Text>
-          <SignUpForm
-            loggedInRef={loggedInRef}
-            setLoading={setLoading}
-            setContainerState={setContainerState}
-            navigation={navigation}
-            SairaStencilOne_400Regular={SairaStencilOne_400Regular}
-            setLoginRef={setLoginRef}
-          />
-        </>
-      )}
-    </SafeAreaView>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="position">
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.headerText}>SIGN UP</Text>
+        <SignUpForm
+          loggedInRef={loggedInRef}
+          setLoading={setLoading}
+          setContainerState={setContainerState}
+          navigation={navigation}
+          SairaStencilOne_400Regular={SairaStencilOne_400Regular}
+          setLoginRef={setLoginRef}
+        />
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

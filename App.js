@@ -41,10 +41,6 @@ export default function App() {
     id: null,
     user: null,
   });
-  const [userData, setUserData] = useState({
-    user: null,
-    fetched: false,
-  });
 
   const loggedInRef = React.useRef(false);
   const uidRef = React.useRef();
@@ -108,15 +104,11 @@ export default function App() {
     });
   };
 
-  const setUserStateData = (input) => {
-    setUserData(input);
-  };
-
   const setLoginRef = (input) => {
     loggedInRef.current = input;
   };
 
-  if (loggedInRef.current === false && !loading) {
+  if (loggedInRef.current === false && !loading && fontsLoaded) {
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -124,6 +116,7 @@ export default function App() {
             {(props) => (
               <LoginScreen
                 {...props}
+                SairaStencilOne_400Regular={SairaStencilOne_400Regular}
                 loggedInRef={loggedInRef}
                 setLoading={setLoading}
                 setContainerState={setAuthState}
@@ -134,6 +127,7 @@ export default function App() {
           <Stack.Screen name="SignUp" options={{ headerShown: false }}>
             {(props) => (
               <SignUpScreen
+                SairaStencilOne_400Regular={SairaStencilOne_400Regular}
                 loggedInRef={loggedInRef}
                 {...props}
                 setLoading={setLoading}
@@ -151,7 +145,7 @@ export default function App() {
     return <SplashScreen />;
   }
 
-  if (loggedInRef.current === true && !loading) {
+  if (loggedInRef.current === true && !loading && fontsLoaded) {
     return (
       <AuthContext.Provider
         value={{
@@ -168,7 +162,6 @@ export default function App() {
             loggedInRef={loggedInRef}
             SairaStencilOne_400Regular={SairaStencilOne_400Regular}
             setContainerState={setContainerState}
-            setUserStateData={setUserStateData}
           />
         </NavigationContainer>
       </AuthContext.Provider>

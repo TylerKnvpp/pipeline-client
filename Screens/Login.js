@@ -17,30 +17,23 @@ function Login({
   setLoginRef,
   setLoading,
   loggedInRef,
+  SairaStencilOne_400Regular,
 }) {
-  let [fontsLoaded] = useFonts({
-    SairaStencilOne_400Regular,
-  });
-
   return (
-    <SafeAreaView style={styles.container}>
-      {!fontsLoaded ? (
-        <Text>Loading...</Text>
-      ) : (
-        <>
-          <Text style={styles.headerText}>LOGIN</Text>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="position">
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.headerText}>LOGIN</Text>
 
-          <LoginForm
-            loggedInRef={loggedInRef}
-            setLoading={setLoading}
-            setContainerState={setContainerState}
-            navigation={navigation}
-            SairaStencilOne_400Regular={SairaStencilOne_400Regular}
-            setLoginRef={setLoginRef}
-          />
-        </>
-      )}
-    </SafeAreaView>
+        <LoginForm
+          loggedInRef={loggedInRef}
+          setLoading={setLoading}
+          setContainerState={setContainerState}
+          navigation={navigation}
+          SairaStencilOne_400Regular={SairaStencilOne_400Regular}
+          setLoginRef={setLoginRef}
+        />
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

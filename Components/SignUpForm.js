@@ -88,7 +88,7 @@ function SignUpForm({
   };
 
   return (
-    <SafeAreaView style={styles.formContainer}>
+    <View style={styles.formContainer}>
       <Image
         source={require("../assets/pipelinex100px.png")}
         style={styles.logo}
@@ -146,7 +146,7 @@ function SignUpForm({
           onPress={() => navigation.navigate("Login")}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

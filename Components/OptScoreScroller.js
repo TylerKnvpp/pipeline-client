@@ -64,7 +64,7 @@ const OptScoreScroller = ({ title, workouts, theme }) => {
 const styles = StyleSheet.create({
   container: {
     // marginVertical: 20,
-    height: Dimensions.get("screen").height * 0.2,
+    height: "auto",
   },
 
   standardsContainer: {

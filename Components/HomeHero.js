@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     opacity: 0.7,
     textAlign: "center",
-    top: 180,
+    top: Dimensions.get("screen").height / 4.9,
     width: "100%",
     zIndex: 1,
   },
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("screen").height * 0.31,
   },
   heroImage: {
-    height: "100%",
+    height: Dimensions.get("screen").height * 0.28,
     width: "100%",
     // resizeMode: "",
     marginBottom: 0,

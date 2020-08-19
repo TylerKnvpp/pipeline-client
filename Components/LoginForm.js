@@ -72,7 +72,7 @@ function LoginForm({
   };
 
   return (
-    <SafeAreaView style={styles.formContainer}>
+    <View style={styles.formContainer}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <Image
           source={require("../assets/pipelinex100px.png")}
@@ -113,13 +113,12 @@ function LoginForm({
           onPress={() => navigation.navigate("SignUp")}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   formContainer: {
-    flex: 1,
     alignItems: "center",
     backgroundColor: "white",
     borderRadius: 10,

@@ -62,7 +62,6 @@ const Pipelines = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.selectHeader}>Available Pipelines</Text>
       <PipelineScroller
         SairaStencilOne_400Regular={SairaStencilOne_400Regular}
         handlePipelineSelect={handlePipelineSelect}
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 30,
+
     minHeight: "100%",
     minWidth: "100%",
   },

@@ -56,9 +56,9 @@ const PipelineScroller = ({
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: "90%",
+    height: "100%",
     minWidth: "100%",
-    paddingVertical: 10,
+    // paddingVertical: 10,
   },
   cardScroll: {
     flexDirection: "row",

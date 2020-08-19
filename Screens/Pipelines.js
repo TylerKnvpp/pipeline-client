@@ -1,5 +1,12 @@
 import * as React from "react";
-import { View, Text, Button, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  Dimensions,
+  Alert,
+} from "react-native";
 
 import { AuthContext } from "../Context/AuthContext";
 
@@ -9,7 +16,12 @@ import { postUserPipeline } from "../hooks/postUserPipeline";
 import PipelineScroller from "../Components/PipelineScroller";
 import SplashScreen from "../Screens/SplashScreen";
 
-const Pipelines = ({ SairaStencilOne_400Regular, navigation, route }) => {
+const Pipelines = ({
+  SairaStencilOne_400Regular,
+  navigation,
+  route,
+  updateUserState,
+}) => {
   const [pipelines, setPipelines] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -28,8 +40,18 @@ const Pipelines = ({ SairaStencilOne_400Regular, navigation, route }) => {
   });
 
   const handlePipelineSelect = (input) => {
+    const currentPID = authContextData.state.user.pipelineID._id;
+    const nickname = authContextData.state.user.pipelineID.nickname;
+    if (currentPID == input) {
+      Alert.alert(`You are already enrolled in the ${nickname} pipeline.`);
+      return;
+    }
     if (uid && input) {
-      postUserPipeline(uid, input);
+      postUserPipeline(uid, input).then((res) => {
+        if (res.success) {
+          updateUserState(res.user);
+        }
+      });
       navigation.navigate("Home");
     }
   };

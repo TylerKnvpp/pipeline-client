@@ -11,6 +11,7 @@ function HomeStackScreen({
   setContainerState,
   SairaStencilOne_400Regular,
   navigation,
+  updateUserState,
 }) {
   return (
     <HomeStack.Navigator>
@@ -60,23 +61,11 @@ function HomeStackScreen({
         )}
       </HomeStack.Screen>
 
-      <HomeStack.Screen
-        name="Pipelines"
-        // options={{
-        //   headerRight: () => (
-        //     <Button
-        //       title="View All"
-        //       onPress={() => navigation.navigate("Pipelines")}
-        //     />
-        //   ),
-        //   headerRightContainerStyle: {
-        //     paddingRight: 10,
-        //   },
-        // }}
-      >
+      <HomeStack.Screen name="Pipelines">
         {(props) => (
           <PipelinesScreen
             {...props}
+            updateUserState={updateUserState}
             setContainerState={setContainerState}
             SairaStencilOne_400Regular={SairaStencilOne_400Regular}
           />

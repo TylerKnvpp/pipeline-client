@@ -101,6 +101,13 @@ export default function App() {
     });
   };
 
+  const updateUserState = (input) => {
+    setState({
+      ...state,
+      user: input,
+    });
+  };
+
   const setUserStateData = (input) => {
     setUserData(input);
   };
@@ -157,6 +164,7 @@ export default function App() {
       >
         <NavigationContainer>
           <MainTabNavigator
+            updateUserState={updateUserState}
             loggedInRef={loggedInRef}
             SairaStencilOne_400Regular={SairaStencilOne_400Regular}
             setContainerState={setContainerState}

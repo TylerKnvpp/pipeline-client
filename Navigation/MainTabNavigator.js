@@ -19,6 +19,7 @@ function MainTabNavigator({
   SairaStencilOne_400Regular,
   setUserStateData,
   loggedInRef,
+  updateUserState,
 }) {
   let authContextData = React.useContext(AuthContext);
   let userData = authContextData.state.user;
@@ -53,6 +54,7 @@ function MainTabNavigator({
             {(props) => (
               <HomeScreenStack
                 {...props}
+                updateUserState={updateUserState}
                 setUserStateData={setUserStateData}
                 setContainerState={setContainerState}
                 SairaStencilOne_400Regular={SairaStencilOne_400Regular}

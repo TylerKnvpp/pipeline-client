@@ -41,6 +41,7 @@ const PipelineModal = ({ toggleModal, pipeline, handlePipelineSelect }) => {
           onPress: () => {
             if (authContextData.state.user._id && pipeline._id) {
               handlePipelineSelect(pipeline._id);
+
               return;
             }
             console.log("couldnt complete request");

@@ -24,7 +24,7 @@ import UserLatestScoreScroller from "../Components/UserLatestScoreScroller";
 
 const Home = ({ setContainerState, setUserStateData, navigation }) => {
   const [resourceState, setResources] = React.useState([]);
-  const [fetched, setFetched] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   let authContextData = React.useContext(AuthContext);
 
@@ -68,7 +68,9 @@ const Home = ({ setContainerState, setUserStateData, navigation }) => {
     getPipelineResources(pid).then((res) => {
       if (res.resources && resourceState.length === 0) {
         setResources(res.resources);
+        setLoading(false);
       }
+      setLoading(false);
     });
   });
 
@@ -96,8 +98,9 @@ const Home = ({ setContainerState, setUserStateData, navigation }) => {
       ) : (
         <Text>Loading...</Text>
       )}
-
-      <PostScroller resources={resourceState} />
+      {!loading && resourceState.length > 0 ? (
+        <PostScroller resources={resourceState} />
+      ) : null}
     </ScrollView>
   );
 };

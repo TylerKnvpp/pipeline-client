@@ -7,7 +7,10 @@ const HomeHero = ({ url, pipelineName }) => {
 
   return (
     <View style={styles.heroContainer}>
-      <Text style={styles.textOver}>{pipelineName}</Text>
+      {pipelineName != undefined ? (
+        <Text style={styles.textOver}>{pipelineName}</Text>
+      ) : null}
+
       <Image
         style={styles.heroImage}
         defaultSource={require("../assets/sf-soliders.jpeg")}
